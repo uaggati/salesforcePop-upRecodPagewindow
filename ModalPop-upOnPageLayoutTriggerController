@@ -1,0 +1,21 @@
+({
+    doInit: function(component) {
+        var strRecId = component.get("v.recordId");
+        console.log('RecordId ====>'+strRecId);
+        setTimeout($A.getCallback(function(){
+            $A.createComponent("c:The_Component_To_Populate", //replace "The_Component_To_Populate" with your component's name.
+                               {recordId : strRecId}, // make sure that your attribute name matches the "recordId" otherwise modify it.
+                               function(result, status) {
+                                   if (status === "SUCCESS") {
+                                       component.find('overlayLibDemo').showCustomModal({
+                                           header: "Account Edit Form",
+                                           body: result, 
+                                           showCloseButton: true,
+                                           cssClass: "mymodal", 
+                                       })
+                                   }                               
+                               });
+        }), 500); // the setTimeout to 500 will solve few issue caused in sevice apps preventing to popup to populate properly.
+    }
+    
+})
